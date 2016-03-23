@@ -77,5 +77,28 @@ title('Radiation efficiency Vs Operating Frequency (f)')
 text(2e9,Ef2,...
 '\bullet\leftarrow\fontname{times}Er at {f} = 2Ghz [Rogers TMM4] ',...
 'FontSize',12)
-%% Directivity
-
+%% patch length variation
+figure(4)
+c=3e8;
+er=i1:.01:i2;
+w=(c/(2*fr)).*sqrt((2./(er+1)));
+plot(er,w)
+xlabel('Relative Dielectric Constant (er)')
+ylabel('Width of patch antenna (w)')
+grid on
+er=2.32;
+w1=(c/(2*fr)).*sqrt((2./(er+1)));
+text(2.32,w1,'\bullet\leftarrow\fontname{times}w at {er} = 2.32 [Duroid]','FontSize',12)
+er=4.5;
+w2=(c/(2*fr)).*sqrt((2./(er+1)));
+text(4.5,w2,'\bullet\leftarrow\fontname{times}w at {er} =4.5 [Rogers TMM4]','FontSize',12)
+%% Bandwidth calculation
+lambda=c/fr;
+% Width of patch
+w=(c/(2*fr))*sqrt((2/(er+1)));
+ef= (er+1)/2 + ((er-1)/2)*(1/sqrt(1+(12*h/w)));
+lef=c/(2*fr*sqrt(ef));
+delL=0.412*h*((ef+0.3)/(ef-0.258))*(((w/h)+0.264)/((w/h)+0.8));
+l=lef-2*delL;
+BW=(3.77*((er-1)/(er*er))*(w/l)*(h/lambda))*100;
+disp(BW)
